@@ -1,32 +1,8 @@
-// function quicksort(arr, start = 0, end = arr.length + 1) {
-//   let pivot = arr[start];
-//   let swapIn = start;
-
-//   for (let i = start + 1; i < arr.length; i++) {
-//     if (pivot > arr[i]) {
-//       swapIn = swapIn + 1;
-//       var temp = arr[swapIn];
-//       arr[swapIn] = arr[i];
-//       arr[i] = temp;
-//       console.log(arr);
-//     }
-//   }
-
-//   var temp = arr[start];
-//   arr[start] = arr[swapIn];
-//   arr[swapIn] = temp;
-
-//   return arr;
-// }
-
-// let arr = [4, 8, 2, 1, 5, 7, 6, 3];
-// console.log(quicksort(arr));
-
-function quicksort(arr, start = 0, end = arr.length + 1) {
+function pivot(arr, start = 0, end = arr.length - 1) {
   let pivot = arr[start];
   let swapi = start;
 
-  for (let i = 0; i < arr.length; i++) {
+  for (let i = start + 1; i < arr.length; i++) {
     if (pivot > arr[i]) {
       swapi = swapi + 1;
 
@@ -40,9 +16,19 @@ function quicksort(arr, start = 0, end = arr.length + 1) {
   arr[start] = arr[swapi];
   arr[swapi] = temp;
 
+  return swapi;
+}
+
+function quickSort(arr, left = 0, right = arr.length - 1) {
+  if (left < right) {
+    let pivotIndex = pivot(arr, left, right); //3
+    //left
+    quickSort(arr, left, pivotIndex - 1);
+    //right
+    quickSort(arr, pivotIndex + 1, right);
+  }
   return arr;
 }
 
-let arr = [4, 9, 8, 7, 6, 3, 2, 1];
-
-console.log(quicksort(arr));
+let arr = [4, 9, 3, 2, 1, 5, 6, -2];
+console.log(quickSort(arr));
