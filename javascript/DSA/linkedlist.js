@@ -97,21 +97,80 @@ class LinkedList {
     }
   }
 
-  insert(index, value) {
-    let newNode = new Node(value);
+  // getNode(index) {
+  //   let current = 0;
+  //   let finalNode = this.head;
 
-    let current = this.head;
-    let temp = current;
+  //   while (current !== index) {
+  //     finalNode = finalNode.next;
+  //     current++;
+  //   }
+  //   return finalNode;
+  // }
 
-    if (index === 0) {
-      this.unshift(value);
-    } else if (index === this.length) {
-      this.push(value);
+  // insert(index, value) {
+  //   let newNode = new Node(value);
+
+  //   if (index === 0) {
+  //     this.unshift(value);
+  //   } else if (index === this.length) {
+  //     this.push(value);
+  //   } else {
+  //     let curren = this.getNode(index);
+
+  //     newNode.next = curren.next.next;
+  //     curren.next = newNode;
+  //   }
+  // }
+
+  removen(index) {
+    if (index < 0 || index > this.length) {
+      return undefined;
+    }
+    if (index == 0) {
+      return this.shift();
+    }
+    if (index == this.length) {
+      return this.pop();
     } else {
-      for (let i = 0; i < index; i++) {
-        temp = current;
-        current = current.next;
+      let prev = this.head;
+      let current = 0;
+      while (current < index - 1) {
+        prev = prev.next;
+        current++;
       }
+      console.log(prev.val);
+      prev.next = prev.next.next;
+    }
+
+    this.length--;
+  }
+
+  lengthll() {
+    let length = 0;
+    let temp = this.head;
+
+    while (temp) {
+      length++;
+      temp = temp.next;
+    }
+
+    return length;
+  }
+
+  reverse() {
+    let node = this.head;
+    this.head = this.tail;
+    this.tail = node;
+
+    let next;
+    let prev = null;
+    let llength = this.lengthll();
+    for (let i = 0; i < llength; i++) {
+      next = node.next;
+      node.next = prev;
+      prev = node;
+      node = next;
     }
   }
 
@@ -139,7 +198,8 @@ llist.unshift(234);
 
 llist.getvalue(3);
 llist.setvalue(2, 2000);
+llist.removen(1);
 
-llist.insert(1234, 0);
-
+// llist.insert(1234, 0);
+llist.reverse();
 llist.displayList();
