@@ -1,45 +1,60 @@
-// queue will be first-in-first-out(fifo)
-// -----> or <-
-
-class Queue {
-  constructor() {
-    this.items = [];
-  }
-
-  push(element) {
-    this.items.unshift(element);
-  }
-
-  pop() {
-    this.items.pop();
-  }
-
-  size() {
-    return this.items.length;
-  }
-
-  peek() {
-    return this.items[this.items.length - 1];
-  }
-
-  print() {
-    return this.items.toString();
+class Node {
+  constructor(value) {
+    this.value = value;
+    this.next = null;
   }
 }
 
-// instance of a queue
+class Queue {
+  constructor() {
+    this.head = null;
+    this.tail = null;
+    this.size = 0;
+  }
 
-const queue = new Queue();
+  enqueue(value) {
+    let node = new Node(value);
+    if (!this.head) {
+      this.head = node;
+      this.tail = node;
+    } else {
+      this.tail.next = node;
+      node.next = null;
+      this.tail = node;
+    }
+    this.size++;
+  }
 
-queue.push(1);
-queue.push(2);
-queue.push(3);
-queue.push(4);
+  dequeue() {
+    if (!this.head) {
+      return null;
+    } else {
+      let nnode = this.head.next;
+      this.head = nnode;
+    }
 
-queue.pop();
+    this.size--;
+  }
 
-console.log(queue.peek());
+  printqueue() {
+    if (!this.head) {
+      return "the queue is empty";
+    } else {
+      let node = this.head;
 
-console.log(queue.size());
+      while (node) {
+        console.log(node.value);
+        node = node.next;
+      }
+    }
+  }
+}
 
-console.log(queue.print());
+let queue = new Queue();
+
+queue.enqueue(1);
+queue.enqueue(2);
+queue.enqueue(3);
+queue.dequeue();
+
+queue.printqueue();
